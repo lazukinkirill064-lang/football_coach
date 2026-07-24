@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Trainer - Восстановление</title>
+    <script src="https://telegram.org/js/telegram-web-app.js"></script>
+    <style>
+        body {
+            background-color: #121212;
+            color: #ffffff;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 20px;
+        }
+        .card {
+            background: #1e1e1e;
+            border-radius: 16px;
+            padding: 20px;
+            margin-bottom: 20px;
+            border: 1px solid #2a2a2a;
+        }
+        h2 { 
+            color: #9ACD32; 
+            font-size: 20px; 
+            margin-top: 0; 
+        }
+        .emoji-group {
+            display: flex;
+            justify-content: space-between;
+            margin: 15px 0;
+        }
+        .emoji-btn {
+            background: #2a2a2a;
+            border: 2px solid transparent;
+            font-size: 24px;
+            padding: 12px;
+            border-radius: 12px;
+            cursor: pointer;
+            width: 28%;
+            text-align: center;
+            transition: all 0.2s ease;
+        }
+        .emoji-btn.active {
+            border-color: #9ACD32;
+            background: rgba(154, 205, 50, 0.15);
+        }
+        .task-list {
+            list-style: none;
+            padding: 0;
+        }
+        .task-item {
+            background: #2a2a2a;
+            padding: 12px;
+            border-radius: 10px;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+        }
+        .task-item input {
+            margin-right: 12px;
+            accent-color: #9ACD32;
+            transform: scale(1.3);
+        }
+        .btn-submit {
+            width: 100%;
+            background: #9ACD32;
+            color: #121212;
+            border: none;
+            padding: 16px;
+            border-radius: 12px;
+            font-weight: bold;
+            font-size: 16px;
+            cursor: pointer;
+            transition: opacity 0.2s ease;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="card">
+        <h2>📊 Оценка нагрузки и менталки</h2>
+        <p>Какое состояние после тренировки?</p>
+        <div class="emoji-group">
+            <div class="emoji-btn" onclick="selectState(this)">😤<b
+mall style="font-size:10px">Тяжело</small></div>
+            <div class="emoji-btn active" onclick="selectState(this)">👍<br
+all style="font-size:10px">Норм</small></div>
+            <div class="emoji-btn" onclick="selectState(this)">🔥
+
+ll style="font-size:10px">Топ</small></div>
+        </div>
+    </div>
+
+    <div class="card">
+        <h2>🧘 Программа восстановления (AI Plan)</h2>
+        <p>Выполни комплекс на вечер для зачисления +100 XP:</p>
+        <ul class="task-list">
+            <li class="task-item">
+                <input type="checkbox" id="t1" onchange="checkTasks()">
+                <label for="t1">🦵 МФР / Проработка мышц ног (10 мин)</label>
+            </li>
+            <li class="task-item">
+                <input type="checkbox" id="t2" onchange="checkTasks()">
+                <label for="t2">🧘 Легкий стретчинг на забитые зоны (10 мин)</label>
+            </li>
+            <li class="task-item">
+                <input type="checkbox" id="t3" onchange="checkTasks()">
+                <label for="t3">💧 Восполнение водного баланса (0.5 л)</label>
+            </li>
+        </ul>
+    </div>
+
+    <button class="btn-submit" id="submitBtn" onclick="finishRecovery()" disabled style="opacity: 0.5;">
+        Завершить и забрать +100 XP 🏆
+    </button>
+
+    <script>
+        const tg = window.Telegram.WebApp;
+        tg.expand();
+
+        function selectState(el) {
+            document.querySelectorAll('.emoji-btn').forEach(b => b.classList.remove('active'));
+            el.classList.add('active');
+        }
+
+        function checkTasks() {
+            const t1 = document.getElementById('t1').checked;
+            const t2 = document.getElementById('t2').checked;
+            const t3 = document.getElementById('t3').checked;
+            
+            const btn = document.getElementById('submitBtn');
+            if (t1 && t2 && t3) {
+                btn.disabled = false;
+                btn.style.opacity = '1';
+            } else {
+                btn.disabled = true;
+                btn.style.opacity = '0.5';
+            }
+        }
+
+        function finishRecovery() {
+            tg.sendData(JSON.stringify({ status: "completed", xp: 100 }));
+        }
+    </script>
+</body>
+</html>
