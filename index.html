@@ -1,192 +1,307 @@
 <!DOCTYPE html>
 <html lang="ru">
-
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Memora AI Football Coach</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+  <title>MEMORA — AI Football Coach</title>
+  <script src="https://telegram.org/js/telegram-web-app.js"></script>
+  <style>
+    :root {
+      --bg-color: #0f1215;
+      --card-bg: #181c22;
+      --accent-color: #9ACD32;
+      --text-main: #ffffff;
+      --text-muted: #8a939e;
+      --border-color: #262c36;
+      --input-bg: #111419;
+    }
 
-    <script src="https://telegram.org/js/telegram-web-app.js"></script>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+      -webkit-tap-highlight-color: transparent;
+    }
 
-    <link rel="stylesheet" href="style.css">
+    body {
+      background-color: var(--bg-color);
+      color: var(--text-main);
+      display: flex;
+      justify-content: center;
+      min-height: 100vh;
+      padding: 20px 16px;
+    }
+
+    .app-container {
+      width: 100%;
+      max-width: 440px;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .header {
+      text-align: center;
+      margin-bottom: 24px;
+    }
+
+    .brand-title {
+      font-size: 28px;
+      font-weight: 900;
+      letter-spacing: 2px;
+      color: var(--accent-color);
+      text-transform: uppercase;
+    }
+
+    .brand-subtitle {
+      font-size: 13px;
+      color: var(--text-muted);
+      margin-top: 2px;
+    }
+
+    .card {
+      background: var(--card-bg);
+      border: 1px solid var(--border-color);
+      border-radius: 20px;
+      padding: 24px 20px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+    }
+
+    .step-indicator {
+      font-size: 12px;
+      font-weight: 700;
+      color: var(--accent-color);
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      margin-bottom: 8px;
+    }
+
+    .step-title {
+      font-size: 22px;
+      font-weight: 700;
+      margin-bottom: 6px;
+    }
+
+    .step-desc {
+      font-size: 14px;
+      color: var(--text-muted);
+      margin-bottom: 24px;
+      line-height: 1.4;
+    }
+
+    .form-group {
+      margin-bottom: 16px;
+    }
+
+    label {
+      display: block;
+      font-size: 12px;
+      color: var(--text-muted);
+      margin-bottom: 6px;
+      font-weight: 600;
+    }
+
+    input, select {
+      width: 100%;
+      background: var(--input-bg);
+      border: 1px solid var(--border-color);
+      border-radius: 12px;
+      padding: 14px;
+      color: #fff;
+      font-size: 15px;
+      outline: none;
+      transition: border-color 0.2s;
+    }
+
+    input:focus, select:focus {
+      border-color: var(--accent-color);
+    }
+
+    .toggle-group {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+      margin-bottom: 16px;
+    }
+
+    .toggle-btn {
+      background: var(--input-bg);
+      border: 1px solid var(--border-color);
+      color: #fff;
+      padding: 14px;
+      border-radius: 12px;
+      font-size: 14px;
+      font-weight: 600;
+      cursor: pointer;
+      text-align: center;
+      transition: all 0.2s;
+    }
+
+    .toggle-btn.active {
+      border-color: var(--accent-color);
+      background: rgba(154, 205, 50, 0.1);
+      color: var(--accent-color);
+    }
+
+    .btn-group {
+      display: flex;
+      gap: 12px;
+      margin-top: 24px;
+    }
+
+    .btn {
+      flex: 1;
+      padding: 16px;
+      border-radius: 14px;
+      font-size: 15px;
+      font-weight: 700;
+      cursor: pointer;
+      border: none;
+      transition: all 0.2s;
+    }
+
+    .btn-primary {
+      background: var(--accent-color);
+      color: #000;
+    }
+
+    .btn-secondary {
+      background: transparent;
+      border: 1px solid var(--border-color);
+      color: var(--text-muted);
+    }
+
+    .step-page {
+      display: none;
+    }
+
+    .step-page.active {
+      display: block;
+    }
+  </style>
 </head>
-
 <body>
 
-    <!-- ================= SPLASH ================= -->
+  <div class="app-container">
+    <div class="header">
+      <div class="brand-title">MEMORA</div>
+      <div class="brand-subtitle">AI Football Coach</div>
+    </div>
 
-    <section id="splash-screen" class="screen active">
+    <div class="card">
+      
+      <!-- ШАГ 1 -->
+      <div class="step-page active" id="step1">
+        <div class="step-indicator">Шаг 1 из 3</div>
+        <div class="step-title">Добро пожаловать 👋</div>
+        <div class="step-desc">Создадим твоего персонального AI-тренера. Укажи основные данные.</div>
 
-        <div class="logo-circle">
-            ⚽
+        <div class="form-group">
+          <label>Твое имя</label>
+          <input type="text" id="name" placeholder="Иван Иванов">
         </div>
 
-        <h1>MEMORA</h1>
-
-        <p class="subtitle">
-            AI Football Coach
-        </p>
-
-        <div class="loader">
-            <div class="loader-fill"></div>
+        <div class="form-group">
+          <label>Возраст</label>
+          <input type="number" id="age" placeholder="18">
         </div>
 
-    </section>
-
-    <!-- ================= ONBOARDING ================= -->
-
-    <section id="onboarding" class="screen">
-
-        <!-- STEP INDICATOR -->
-
-        <div class="progress">
-
-            <div class="progress-fill" id="progressFill"></div>
-
+        <div class="form-group">
+          <label>Позиция на поле</label>
+          <select id="position">
+            <option value="ST">Нападающий (ST)</option>
+            <option value="CM">Центральный полузащитник (CM)</option>
+            <option value="WING">Вингер (LW/RW)</option>
+            <option value="CB">Центральный защитник (CB)</option>
+            <option value="LB_RB">Крайний защитник (LB/RB)</option>
+            <option value="GK">Вратарь (GK)</option>
+          </select>
         </div>
 
-        <!-- STEP 1 -->
+        <div class="btn-group">
+          <button class="btn btn-primary" onclick="nextStep(2)">Далее →</button>
+        </div>
+      </div>
 
-        <div class="step-page active" id="step1">
+      <!-- ШАГ 2 -->
+      <div class="step-page" id="step2">
+        <div class="step-indicator">Шаг 2 из 3</div>
+        <div class="step-title">Были травмы? 🩹</div>
+        <div class="step-desc">Это поможет составить безопасный план тренировок.</div>
 
-            <span class="step-text">
-                Шаг 1 из 6
-            </span>
-
-            <h2>
-                Добро пожаловать 👋
-            </h2>
-
-            <p>
-                Давай познакомимся и создадим твоего персонального AI-тренера.
-            </p>
-
-            <input
-                id="playerName"
-                type="text"
-                placeholder="Твое имя">
-
-            <input
-                id="playerAge"
-                type="number"
-                placeholder="Возраст">
-
-            <h3 class="block-title">
-                Выбери позицию
-            </h3>
-
-            <div class="football-field">
-
-                <div class="field-line"></div>
-
-                <div class="player-dot" id="playerDot"></div>
-
-            </div>
-
-            <select id="position">
-
-                <option value="">Позиция</option>
-
-                <option value="GK">Вратарь</option>
-
-                <option value="CB">Центральный защитник</option>
-
-                <option value="LB">Левый защитник</option>
-
-                <option value="RB">Правый защитник</option>
-
-                <option value="CDM">Опорный полузащитник</option>
-
-                <option value="CM">Центральный полузащитник</option>
-
-                <option value="CAM">Атакующий полузащитник</option>
-
-                <option value="LW">Левый вингер</option>
-
-                <option value="RW">Правый вингер</option>
-
-                <option value="ST">Нападающий</option>
-
-            </select>
-
-            <button class="primary-btn next-step">
-                Далее →
-            </button>
-
+        <div class="toggle-group">
+          <button class="toggle-btn active" id="btn-no-injury" onclick="selectInjury(false)">Нет</button>
+          <button class="toggle-btn" id="btn-has-injury" onclick="selectInjury(true)">Да</button>
         </div>
 
-        <!-- STEP 2 -->
-
-        <div class="step-page" id="step2">
-
-            <span class="step-text">
-                Шаг 2 из 6
-            </span>
-
-            <h2>
-                Были травмы?
-            </h2>
-
-            <p>
-                Это поможет составить безопасный тренировочный план.
-            </p>
-
-            <div class="choice-grid">
-
-                <button class="choice-card">
-                    ✅ Нет
-                </button>
-
-                <button class="choice-card">
-                    🚑 Да
-                </button>
-
-            </div>
-
-            <input
-                type="text"
-                placeholder="Например: голеностоп, колено">
-
-            <button class="secondary-btn prev-step">
-                ← Назад
-            </button>
-
-            <button class="primary-btn next-step">
-                Далее →
-            </button>
-
+        <div class="form-group" id="injury-details-group" style="display: none;">
+          <label>Какие травмы были?</label>
+          <input type="text" id="injury_details" placeholder="Например: голеностоп, колено">
         </div>
 
-        <!-- STEP 3 -->
+        <div class="btn-group">
+          <button class="btn btn-secondary" onclick="nextStep(1)">← Назад</button>
+          <button class="btn btn-primary" onclick="nextStep(3)">Далее →</button>
+        </div>
+      </div>
 
-        <div class="step-page" id="step3">
+      <!-- ШАГ 3 -->
+      <div class="step-page" id="step3">
+        <div class="step-indicator">Шаг 3 из 3</div>
+        <div class="step-title">Твой клуб ⚽</div>
+        <div class="step-desc">Укажи, где ты сейчас выступаешь.</div>
 
-            <span class="step-text">
-                Шаг 3 из 6
-            </span>
+        <div class="form-group">
+          <label>Название клуба</label>
+          <input type="text" id="club" placeholder="Название вашей команды">
+        </div>
 
-            <h2>
-                Твой клуб
-            </h2>
+        <div class="form-group">
+          <label>Имя тренера (если есть)</label>
+          <input type="text" id="coach" placeholder="Имя тренера">
+        </div>
 
-            <p>
-                Расскажи, где ты тренируешься.
-            </p>
+        <div class="btn-group">
+          <button class="btn btn-secondary" onclick="nextStep(2)">← Назад</button>
+          <button class="btn btn-primary" onclick="finishOnboarding()">Завершить 🚀</button>
+        </div>
+      </div>
 
-            <input
-                type="text"
-                placeholder="Название клуба">
+    </div>
+  </div>
 
-            <input
-                type="text"
-                placeholder="Тренер">
+  <script>
+    const tg = window.Telegram.WebApp;
+    tg.expand();
 
-            <button class="secondary-btn prev-step">
-                ← Назад
-            </button>
+    let hasInjury = false;
 
-            <button class="primary-btn next-step">
-                Далее →
-            </button>
+    function nextStep(step) {
+      document.querySelectorAll('.step-page').forEach(el => el.classList.remove('active'));
+      document.getElementById('step' + step).classList.add('active');
+    }
 
-        </div
+    function selectInjury(status) {
+      hasInjury = status;
+      document.getElementById('btn-no-injury').classList.toggle('active', !status);
+      document.getElementById('btn-has-injury').classList.toggle('active', status);
+      document.getElementById('injury-details-group').style.display = status ? 'block' : 'none';
+    }
+
+    function finishOnboarding() {
+      const data = {
+        name: document.getElementById('name').value,
+        age: document.getElementById('age').value,
+        position: document.getElementById('position').value,
+        has_injury: hasInjury,
+        injury_details: hasInjury ? document.getElementById('injury_details').value : '',
+        club: document.getElementById('club').value,
+        coach: document.getElementById('coach').value
+      };
+
+      tg.sendData(JSON.stringify(data));
+      tg.close();
+    }
+  </script>
+</body>
+</html>
