@@ -1,1 +1,192 @@
+<!DOCTYPE html>
+<html lang="ru">
 
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Memora AI Football Coach</title>
+
+    <script src="https://telegram.org/js/telegram-web-app.js"></script>
+
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <!-- ================= SPLASH ================= -->
+
+    <section id="splash-screen" class="screen active">
+
+        <div class="logo-circle">
+            ⚽
+        </div>
+
+        <h1>MEMORA</h1>
+
+        <p class="subtitle">
+            AI Football Coach
+        </p>
+
+        <div class="loader">
+            <div class="loader-fill"></div>
+        </div>
+
+    </section>
+
+    <!-- ================= ONBOARDING ================= -->
+
+    <section id="onboarding" class="screen">
+
+        <!-- STEP INDICATOR -->
+
+        <div class="progress">
+
+            <div class="progress-fill" id="progressFill"></div>
+
+        </div>
+
+        <!-- STEP 1 -->
+
+        <div class="step-page active" id="step1">
+
+            <span class="step-text">
+                Шаг 1 из 6
+            </span>
+
+            <h2>
+                Добро пожаловать 👋
+            </h2>
+
+            <p>
+                Давай познакомимся и создадим твоего персонального AI-тренера.
+            </p>
+
+            <input
+                id="playerName"
+                type="text"
+                placeholder="Твое имя">
+
+            <input
+                id="playerAge"
+                type="number"
+                placeholder="Возраст">
+
+            <h3 class="block-title">
+                Выбери позицию
+            </h3>
+
+            <div class="football-field">
+
+                <div class="field-line"></div>
+
+                <div class="player-dot" id="playerDot"></div>
+
+            </div>
+
+            <select id="position">
+
+                <option value="">Позиция</option>
+
+                <option value="GK">Вратарь</option>
+
+                <option value="CB">Центральный защитник</option>
+
+                <option value="LB">Левый защитник</option>
+
+                <option value="RB">Правый защитник</option>
+
+                <option value="CDM">Опорный полузащитник</option>
+
+                <option value="CM">Центральный полузащитник</option>
+
+                <option value="CAM">Атакующий полузащитник</option>
+
+                <option value="LW">Левый вингер</option>
+
+                <option value="RW">Правый вингер</option>
+
+                <option value="ST">Нападающий</option>
+
+            </select>
+
+            <button class="primary-btn next-step">
+                Далее →
+            </button>
+
+        </div>
+
+        <!-- STEP 2 -->
+
+        <div class="step-page" id="step2">
+
+            <span class="step-text">
+                Шаг 2 из 6
+            </span>
+
+            <h2>
+                Были травмы?
+            </h2>
+
+            <p>
+                Это поможет составить безопасный тренировочный план.
+            </p>
+
+            <div class="choice-grid">
+
+                <button class="choice-card">
+                    ✅ Нет
+                </button>
+
+                <button class="choice-card">
+                    🚑 Да
+                </button>
+
+            </div>
+
+            <input
+                type="text"
+                placeholder="Например: голеностоп, колено">
+
+            <button class="secondary-btn prev-step">
+                ← Назад
+            </button>
+
+            <button class="primary-btn next-step">
+                Далее →
+            </button>
+
+        </div>
+
+        <!-- STEP 3 -->
+
+        <div class="step-page" id="step3">
+
+            <span class="step-text">
+                Шаг 3 из 6
+            </span>
+
+            <h2>
+                Твой клуб
+            </h2>
+
+            <p>
+                Расскажи, где ты тренируешься.
+            </p>
+
+            <input
+                type="text"
+                placeholder="Название клуба">
+
+            <input
+                type="text"
+                placeholder="Тренер">
+
+            <button class="secondary-btn prev-step">
+                ← Назад
+            </button>
+
+            <button class="primary-btn next-step">
+                Далее →
+            </button>
+
+        </div
